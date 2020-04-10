@@ -1,0 +1,6 @@
+C:\Users\burak\Desktop\Swinburne\AI\Assignment1\Assignment1\Assignment1\bin\Debug\Assignment1.exe.config
+C:\Users\burak\Desktop\Swinburne\AI\Assignment1\Assignment1\Assignment1\bin\Debug\Assignment1.exe
+C:\Users\burak\Desktop\Swinburne\AI\Assignment1\Assignment1\Assignment1\bin\Debug\Assignment1.pdb
+C:\Users\burak\Desktop\Swinburne\AI\Assignment1\Assignment1\Assignment1\obj\Debug\Assignment1.csprojAssemblyReference.cache
+C:\Users\burak\Desktop\Swinburne\AI\Assignment1\Assignment1\Assignment1\obj\Debug\Assignment1.exe
+C:\Users\burak\Desktop\Swinburne\AI\Assignment1\Assignment1\Assignment1\obj\Debug\Assignment1.pdb

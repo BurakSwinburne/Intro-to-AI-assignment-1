@@ -1,0 +1,3 @@
+# Ignore this so that Git doesn't try ad db.loc file
+
+.vs/

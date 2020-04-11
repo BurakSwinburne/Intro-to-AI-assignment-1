@@ -15,12 +15,12 @@ namespace Assignment1
     class Environment
     {
         int _columns, _rows; // Dimensions of environment
-        List<Coordinate> _goalStates = new List<Coordinate>(); // Store a list of of possible goal states
+        List<State> _goalStates = new List<State>(); // Store a list of of possible goal states
         List<Coordinate> _walls = new List<Coordinate>(); // Store all the walls in the environment
 
         Coordinate _agentCoordinate; // Agent's location in the environment
         public Coordinate AgentCoordinate { get => _agentCoordinate; set => _agentCoordinate = value; }
-        public List<Coordinate> GoalStates { get => _goalStates; set => _goalStates = value; }
+        public List<State> GoalStates { get => _goalStates; set => _goalStates = value; }
 
 
 
@@ -92,7 +92,8 @@ namespace Assignment1
 
             /**
              * Now iterate through every goal coordinate, and convert the strings into
-             * coordinate objects, which will be stored into the list of goal coordinates
+             * coordinate objects. Then create goal state objects, which will use the coordinates
+             * to determine if the agent has reached their goal
              */
             foreach (string position in goalPositions)
             {
@@ -101,7 +102,8 @@ namespace Assignment1
                 int y = int.Parse(xyPairValues[1]);
 
                 Coordinate coordinate = new Coordinate(x, y);
-                _goalStates.Add(coordinate);
+                State goalState = new State(coordinate);
+                _goalStates.Add(goalState);
             }
 
             /**

@@ -26,19 +26,42 @@ namespace Assignment1
          *
          */
         
-        public void Enqueue()
+        
+        // Add a state to the back of the queue
+        private void Enqueue(State state)
         {
-
+            _states.AddLast(state);
         }
 
-        public void Dequeue()
+        // Remove the first state in the queue
+        private void Dequeue()
         {
-
+            if (_states.Count != 0)
+            {
+                // NOTE: THE REMOVEFIRST METHOD DOES NOT RETURN THE NODE ITSELF. KEEP THAT IN MIND --------
+                _states.RemoveFirst();
+            }
         }
 
-        public void GetTop()
+        // Get the state at the top of the queue
+        public State GetTop()
         {
+            return _states.First();
+        }
 
+        // Get the state at the top of the queye
+        public State Pop()
+        {
+            State poppedState = GetTop();
+            
+            Dequeue();
+
+            return poppedState;
+        }
+
+        public void Push(State state)
+        {
+            Enqueue(state);
         }
 
         public Boolean IsEmpty()

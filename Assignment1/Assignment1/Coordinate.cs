@@ -42,6 +42,19 @@ namespace Assignment1
         }
 
 
+        /// <summary>
+        /// Check if a given coordinate is the same as this coordinate
+        /// </summary>
+        /// <param name="coordinate">The other coordinate</param>
+        /// <returns>True if they're the same. Otherwise false</returns>
+        public Boolean Equals(Coordinate coordinate)
+        {
+            int otherX = coordinate.X;
+            int otherY = coordinate.Y;
+
+            return (otherX == _x) && (otherY == _y);
+        }
+
         public int X { get => _x; set => _x = value; }
         public int Y { get => _y; set => _y = value; }
         public int Width { get => _width; set => _width = value; }

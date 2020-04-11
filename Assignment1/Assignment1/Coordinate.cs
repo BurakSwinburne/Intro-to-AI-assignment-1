@@ -18,8 +18,8 @@ namespace Assignment1
         /// <summary>
         /// Store X and Y values which represent the coordinate position
         /// </summary>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
+        /// <param name="x">The coordinate's point along the x axis</param>
+        /// <param name="y">The coordinate's point along the y axis</param>
         public Coordinate(int x, int y)
         {
             _x = x;
@@ -29,10 +29,10 @@ namespace Assignment1
         /// <summary>
         /// Used to create walls of varying sizes
         /// </summary>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
-        /// <param name="width"></param>
-        /// <param name="height"></param>
+        /// <param name="x">The wall's starting point along the x axis, starting from left side</param>
+        /// <param name="y">The wall's point along the y axis, starting from top side</param>
+        /// <param name="width">The width of the wall</param>
+        /// <param name="height">The height of the wall</param>
         public Coordinate(int x, int y, int width, int height)
         {
             _x = x;

@@ -15,9 +15,14 @@ namespace Assignment1
     class Environment
     {
         int _columns, _rows; // Dimensions of environment
-        int _agentStartingX, _agentStartingY;
         List<Coordinate> _goalStates = new List<Coordinate>(); // Store a list of of possible goal states
         List<Coordinate> _walls = new List<Coordinate>(); // Store all the walls in the environment
+
+        Coordinate _agentCoordinate; // Agent's location in the environment
+        public Coordinate AgentCoordinate { get => _agentCoordinate; set => _agentCoordinate = value; }
+        public List<Coordinate> GoalStates { get => _goalStates; set => _goalStates = value; }
+
+
 
         /// <summary>
         /// Read the file containing environment details and create the environment
@@ -76,8 +81,10 @@ namespace Assignment1
             // Agent starting position is formatted as: (x,y)
             agentStartingPos = Regex.Replace(agentStartingPos, @"\(|\)", ""); // Remove parantheses
             string[] agentStartingPosSplit = agentStartingPos.Split(',');
-            _agentStartingX = int.Parse(agentStartingPosSplit[0]);
-            _agentStartingY = int.Parse(agentStartingPosSplit[1]);
+            int _agentStartingX = int.Parse(agentStartingPosSplit[0]);
+            int _agentStartingY = int.Parse(agentStartingPosSplit[1]);
+
+            _agentCoordinate = new Coordinate(_agentStartingX, _agentStartingY);
 
             // Goal states in file are formatted as: (7,0)|(10,3)|(6,1)...
             agentGoalPos = Regex.Replace(agentGoalPos, @"\(|\)", ""); // Remove parantheses

@@ -21,6 +21,30 @@ namespace Assignment1
 
             // Create a new environment object which will store all environment data
             Environment environment = new Environment(path);
+
+            Agent agent = new Agent(environment.AgentCoordinate, environment.GoalStates);
+
+            switch(args[1])
+            {
+                case "BFS":
+                    agent.BreadthFirstSearch();
+                    break;
+                case "DFS":
+
+                    break;
+                case "GBFS":
+
+                    break;
+                case "AS":
+
+                    break;
+                case "CUS1":
+
+                    break;
+                case "CUS2":
+
+                    break;
+            }
         }
     }
 }

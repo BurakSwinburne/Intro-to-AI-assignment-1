@@ -38,7 +38,6 @@ namespace Assignment1
         {
             if (_states.Count != 0)
             {
-                // NOTE: THE REMOVEFIRST METHOD DOES NOT RETURN THE NODE ITSELF. KEEP THAT IN MIND --------
                 _states.RemoveFirst();
             }
         }

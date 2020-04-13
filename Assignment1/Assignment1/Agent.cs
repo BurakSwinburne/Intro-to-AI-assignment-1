@@ -26,8 +26,6 @@ namespace Assignment1
         }
 
 
-        // TODO: FIGURE OUT THE RETURN TYPE FROM ASSIGNMENT DOCUMENT
-        // ---------------------------------------------------------
         /// <summary>
         /// Do a breadth-first search to create a path to any of the goal states. If a goal state
         /// is reached, return it
@@ -67,8 +65,6 @@ namespace Assignment1
 
                     childNodes = currentState.Explore();
 
-
-                    // NOTE: TRY MOVE UP, THEN LEFT, THEN DOWN, THEN RIGHT. 0 IN THIS CASE REPRESENTS UP
                     // Expand the current node by exploring all possible child nodes/states
                     for (int i = 0; i < childNodes.Count; i++)
                     {
@@ -93,16 +89,13 @@ namespace Assignment1
         /// <returns>True if child node was able to be attached. Otherwise false</returns>
         public Boolean AttachChildNode(State state)
         {
-            // NOTE: THIS IS NOT CORRECTLY IDENTIFYING ENTERED STATES - MUST FIX OR ELSE THE SEARCH DOESN'T STOP
             // First check if the state has been entered before
             //if (_enteredStates.Contains(state) || frontier.Contains(state))
             if (StateAlreadyVisited(state) || frontier.Contains(state))
             {
-                // Console.WriteLine("DOES CONTAIN THE STATE: " + state.Location.X + " " + state.Location.Y);
                 return false;
             } else
             {
-                // Console.WriteLine("DOESNT CONTAIN: " + state.Location.X + " " + state.Location.Y);
                 frontier.Push(state);
                 return true;
             }

@@ -153,7 +153,7 @@ namespace Assignment1
         }
 
         /// <summary>
-        /// DEBUGGING PURPOSES ONLY
+        /// DEBUGGING PURPOSES ONLY. Draw the environment in console
         /// </summary>
         public static void DrawSelf()
         {
@@ -187,13 +187,13 @@ namespace Assignment1
                     
                     if (isGoalTile)
                     {
-                        Console.Write("g ");
+                        Console.Write("g "); // Goal
                     } else if (isWall)
                     {
-                        Console.Write("w ");
+                        Console.Write("w "); // Wall
                     }
                     else {
-                        Console.Write("x ");
+                        Console.Write("- "); // Empty space
                     }
                 }
 

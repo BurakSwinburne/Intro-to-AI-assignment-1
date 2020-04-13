@@ -27,7 +27,12 @@ namespace Assignment1
             switch(args[1])
             {
                 case "BFS":
-                    agent.BreadthFirstSearch();
+                    LinkedList<State> resultPath = agent.BreadthFirstSearch();
+
+                    if (resultPath != null)
+                    {
+                        PrintPath(resultPath);
+                    }
                     break;
                 case "DFS":
 
@@ -44,6 +49,33 @@ namespace Assignment1
                 case "CUS2":
 
                     break;
+            }
+        }
+
+        static public void PrintPath(LinkedList<State> path)
+        {
+            int count = 0;
+
+            // Reverse the linkedlist states, since it's in reverse order
+            LinkedList<State> newList = new LinkedList<State>();
+
+            while (path.Count != 0)
+            {
+                LinkedListNode<State> node = path.First;
+                path.RemoveFirst();
+                newList.AddFirst(node);
+            }
+
+            foreach(State pathNode in newList)
+            {
+                count++;
+
+                Console.Write($"[{pathNode.Location.X}, {pathNode.Location.Y}] ");
+                if (count == 9)
+                {
+                    count = 0;
+                    Console.Write("\n");
+                }
             }
         }
     }

@@ -72,35 +72,53 @@ namespace Assignment1
         public List<State> Explore()
         {
             List<State> children = new List<State>();
-            
-            // Get possible actions (i.e ensure that there is no wall in the possible direction it can move)
-            // TODO: DO HERE
 
-
-            // TODO: CHANGE THE 4 VALUE TO THE NUMBER OF POSSIBLE NUMBER OF ACTIONS
-            // MAYBE DON'T USE FOR LOOPS FOR THIS PART
-            for (int i = 0; i < 4; i++)
+            if (AbleToMove(Direction.Up))
             {
-                // NOTE: USING RANDOM TEMPORARILY TO TEST OTHER PARTS OF THE ALGORITHM
-                // TODO: FIX HERE ONCE ALGORITHM IS WORKING
-                
-                Random rng = new Random();
-                int val = rng.Next(10, 12);
-                int valtwo = rng.Next(10, 10);
+                State newState = Move(Direction.Up);
+                children.Add(newState);
+            }
 
-                Coordinate newLocTest = new Coordinate(val, valtwo);
-                State childNodeTest = new State(this, newLocTest);
+            if (AbleToMove(Direction.Left))
+            {
+                State newState = Move(Direction.Left);
+                children.Add(newState);
+            }
 
-                //Coordinate newLocTest = new Coordinate(_location.X + 1, _location.Y + 1);
-                //State childNodeTest = new State(this, newLocTest);
+            if (AbleToMove(Direction.Down)) {
+                State newState = Move(Direction.Down);
+                children.Add(newState);
+            }
 
-                children.Add(childNodeTest);
-                
+            if (AbleToMove(Direction.Right))
+            {
+                State newState = Move(Direction.Right);
+                children.Add(newState);
             }
 
             return children;
         }
 
+
+        public Boolean AbleToMove(Direction direction)
+        {
+            switch (direction)
+            {
+                case Direction.Left:
+                    return _location.X > 0;
+
+                case Direction.Up:
+                    return _location.Y > 0;
+
+                case Direction.Right:
+                    return _location.X < 11;
+
+                case Direction.Down:
+                    return _location.Y < 4;
+            }
+
+            return false;
+        }
 
         /// <summary>
         /// Create a new state rrepresenting the location the agent is moving to
@@ -109,24 +127,26 @@ namespace Assignment1
         /// <returns>The new state</returns>
         public State Move(Direction direction)
         {
-            State newLocation = new State(this, Location);
+            Coordinate newLoc = new Coordinate(_location.X, _location.Y);
 
-            switch(direction)
+            switch (direction)
             {
                 case Direction.Up:
-                    newLocation.Location.Y = newLocation.Location.Y - 1;
-                    break;
-                case Direction.Left:
-                    newLocation.Location.X = newLocation.Location.X - 1;
-                    break;
-                case Direction.Down:
-                    newLocation.Location.Y = newLocation.Location.Y + 1;
+                    newLoc.Y = newLoc.Y - 1;
                     break;
                 case Direction.Right:
-                    newLocation.Location.X = newLocation.Location.X + 1;
+                    newLoc.X = newLoc.X + 1;
+                    break;
+                case Direction.Down:
+                    newLoc.Y = newLoc.Y + 1;
+                    break;
+                case Direction.Left:
+                    newLoc.X = newLoc.X - 1;
                     break;
             }
-            return newLocation;
+
+            State newState = new State(this, newLoc);
+            return newState;
         }
 
 
@@ -139,6 +159,31 @@ namespace Assignment1
         {
             return (_location.X == otherState._location.X)
                 && (_location.Y == otherState.Location.Y);
+        }
+
+
+        /// <summary>
+        /// Travel recursively through all the nodes in the path, then store them in a list
+        /// </summary>
+        /// <param name="path">The current path. Initially empty.</param>
+        /// <returns>A linkedlist of states the agent has entered to reach the goal state</returns>
+        public LinkedList<State> GetPath(LinkedList<State> path)
+        {
+            // If this is the root node
+            if (_parentState == null)
+            {
+                path.AddFirst(this); // Add this node to the path
+                return path;
+            } else
+            {
+                if (path.Count == 0) // The root node hasn't been reached yet
+                {
+                    path = _parentState.GetPath(path); // Call parent node before attaching self to the path
+                }
+
+                path.AddFirst(this); // Add self
+                return path;
+            }
         }
     }
 

@@ -127,5 +127,11 @@ namespace Assignment1
 #endif
             }
         }
+
+        /*
+        public Boolean IsWall(Coordinate location)
+        {
+
+        }*/
     }
 }

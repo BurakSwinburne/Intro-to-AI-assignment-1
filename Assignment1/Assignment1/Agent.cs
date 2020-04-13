@@ -53,7 +53,13 @@ namespace Assignment1
                  */
                 if (currentState.IsGoalState(_goalStates))
                 {
-                    return _enteredStates; // TODO: DEBUG AND CHECK IF THIS IS CORRECT
+                    // Call the node to retrieve it's path, which will call the recursive GetPath method 
+                    // until it reaches the root node
+                    LinkedList<State> path = new LinkedList<State>();
+
+                    return currentState.GetPath(path);
+
+                    //return _enteredStates; // TODO: DEBUG AND CHECK IF THIS IS CORRECT
                 } 
                 /**
                  * Explore all the child nodes and add them to the queue
@@ -94,16 +100,37 @@ namespace Assignment1
         {
             // NOTE: THIS IS NOT CORRECTLY IDENTIFYING ENTERED STATES - MUST FIX OR ELSE THE SEARCH DOESN'T STOP
             // First check if the state has been entered before
-            if (_enteredStates.Contains(state) || frontier.Contains(state))
+            //if (_enteredStates.Contains(state) || frontier.Contains(state))
+            if (StateAlreadyVisited(state) || frontier.Contains(state))
             {
-                Console.WriteLine("DOES CONTAIN  ++++++++++++");
+                Console.WriteLine("DOES CONTAIN THE STATE: " + state.Location.X + " " + state.Location.Y);
                 return false;
             } else
             {
-                Console.WriteLine("DOESNT CONTAIN ====================================");
+                Console.WriteLine("DOESNT CONTAIN: " + state.Location.X + " " + state.Location.Y);
                 frontier.Push(state);
                 return true;
             }
+        }
+
+
+        /// <summary>
+        /// Check if an agent has already visited a state by comparing their location values
+        /// </summary>
+        /// <param name="otherState">The state that the agent will check has been visited already</param>
+        /// <returns>True if state visited, otherwise false</returns>
+        public Boolean StateAlreadyVisited(State otherState)
+        {
+            foreach(State state in _enteredStates)
+            {
+                if (state.Location.X == otherState.Location.X
+                    && state.Location.Y == otherState.Location.Y)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

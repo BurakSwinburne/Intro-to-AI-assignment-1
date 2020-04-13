@@ -1,6 +1,4 @@
-﻿#define DEBUGCOMMENTS
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,15 +10,15 @@ namespace Assignment1
     /// <summary>
     /// A class that stores information about the agent's environment
     /// </summary>
-    class Environment
+    static class Environment
     {
-        int _columns, _rows; // Dimensions of environment
-        List<State> _goalStates = new List<State>(); // Store a list of of possible goal states
-        List<Coordinate> _walls = new List<Coordinate>(); // Store all the walls in the environment
+        static int _columns, _rows; // Dimensions of environment
+        static List<State> _goalStates = new List<State>(); // Store a list of of possible goal states
+        static List<Coordinate> _walls = new List<Coordinate>(); // Store all the walls in the environment
 
-        Coordinate _agentCoordinate; // Agent's location in the environment
-        public Coordinate AgentCoordinate { get => _agentCoordinate; set => _agentCoordinate = value; }
-        public List<State> GoalStates { get => _goalStates; set => _goalStates = value; }
+        static Coordinate _agentCoordinate; // Agent's location in the environment
+        static public Coordinate AgentCoordinate { get => _agentCoordinate; set => _agentCoordinate = value; }
+        static public List<State> GoalStates { get => _goalStates; set => _goalStates = value; }
 
 
 
@@ -28,7 +26,7 @@ namespace Assignment1
         /// Read the file containing environment details and create the environment
         /// </summary>
         /// <param name="path">The file path</param>
-        public Environment(string path)
+        public static void CreateEnvironment(string path)
         {
             /**
              * Read the file. The method returns an array of strings, so convert
@@ -56,17 +54,6 @@ namespace Assignment1
             {
                 walls.Add(line);
             }
-
-#if (DEBUGCOMMENTS)
-            Console.WriteLine("DIMENSIONS: " + dimensions);
-            Console.WriteLine("STARTING POSITION: " + agentStartingPos);
-            Console.WriteLine("GOAL STATES: " + agentGoalPos + "\n\n\n");
-
-            foreach (string line in fileLines)
-            {
-                Console.WriteLine(line);
-            }
-#endif
 
             /**
              * Convert all those string values into appropriate data types
@@ -116,22 +103,102 @@ namespace Assignment1
                 string[] wallDimensions = temp.Split(',');
                 int x = int.Parse(wallDimensions[0]);
                 int y = int.Parse(wallDimensions[1]);
-                int w = int.Parse(wallDimensions[2]);
-                int h = int.Parse(wallDimensions[3]);
+
+                /**
+                 * Note that when it comes to creating the walls, you need to subtract 1 from the width and height,
+                 * otherwise they're always 1 height taller/1 width longer. This is just a quirk in the way the
+                 * environment is created via the file
+                 */
+                int w = int.Parse(wallDimensions[2]) - 1;
+                int h = int.Parse(wallDimensions[3]) - 1;
 
                 Coordinate wall = new Coordinate(x, y, w, h);
                 _walls.Add(wall);
-
-#if (DEBUGCOMMENTS)
-                Console.WriteLine($"Wall x = {wall.X}, y = {wall.Y}, width = {wall.Width}, height = {wall.Height}");
-#endif
             }
         }
 
-        /*
-        public Boolean IsWall(Coordinate location)
+        
+        /// <summary>
+        /// Check if the given location is valid by checking if it is not inside the bounds of a wall,
+        /// or outside the boundaries of the environment
+        /// </summary>
+        /// <param name="location">The coordinate to check</param>
+        /// <returns>Return true if it is a valid location</returns>
+        public static Boolean IsValidLocation(Coordinate location)
         {
+            // First check if outside the boundaries of the environment
+            if (location.X < 0 || location.Y < 0 || location.X > _columns || location.Y > _rows)
+            {
+                return false;
+            }
+            
+            // Iterate through every wall and check if the location falls inside the wall's bounds
+            foreach(Coordinate wall in _walls)
+            {
+                int leftX = wall.X;
+                int rightX = wall.X + wall.Width;
+                int topY = wall.Y;
+                int bottomY = wall.Y + wall.Height;
 
-        }*/
+                if (location.X >= leftX
+                    && location.X <= rightX
+                    && location.Y >= topY
+                    && location.Y <= bottomY)
+                {
+                    return false; // Coordinate is a wall
+                }
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// DEBUGGING PURPOSES ONLY
+        /// </summary>
+        public static void DrawSelf()
+        {
+            for(int i = 0; i < _rows; i++)
+            {
+                for (int j = 0; j < _columns; j++)
+                {
+                    Boolean isGoalTile = false;
+
+                    foreach (State state in GoalStates)
+                    {
+                        if (state.Location.X == j && state.Location.Y == i)
+                        {
+                            isGoalTile = true;
+                            break;
+                        }
+                    }
+
+                    Boolean isWall = false;
+
+                    foreach(Coordinate wall in _walls)
+                    {
+                        if (j >= wall.X && j <= (wall.X + wall.Width)
+                            && i >= wall.Y && i <= (wall.Y + wall.Height))
+                        {
+                            isWall = true;
+                            break;
+                        }
+                    }
+
+                    
+                    if (isGoalTile)
+                    {
+                        Console.Write("g ");
+                    } else if (isWall)
+                    {
+                        Console.Write("w ");
+                    }
+                    else {
+                        Console.Write("x ");
+                    }
+                }
+
+                Console.Write("\n");
+            }
+        }
     }
 }

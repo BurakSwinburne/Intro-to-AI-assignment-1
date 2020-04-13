@@ -1,5 +1,4 @@
-﻿ #define DEBUGCOMMENTS
-
+﻿
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -56,10 +55,7 @@ namespace Assignment1
                     // Call the node to retrieve it's path, which will call the recursive GetPath method 
                     // until it reaches the root node
                     LinkedList<State> path = new LinkedList<State>();
-
                     return currentState.GetPath(path);
-
-                    //return _enteredStates; // TODO: DEBUG AND CHECK IF THIS IS CORRECT
                 } 
                 /**
                  * Explore all the child nodes and add them to the queue
@@ -76,11 +72,10 @@ namespace Assignment1
                     // Expand the current node by exploring all possible child nodes/states
                     for (int i = 0; i < childNodes.Count; i++)
                     {
-                        if (AttachChildNode(childNodes[i])) {
-#if (DEBUGCOMMENTS)
-                            Console.WriteLine($"Successfully attached node at position { childNodes[i].Location.X }, { childNodes[i].Location.Y }");
+                        if (AttachChildNode(childNodes[i]))
+                        {
+                            // Do something here 
                         }
-#endif
 
                     }
                     
@@ -103,11 +98,11 @@ namespace Assignment1
             //if (_enteredStates.Contains(state) || frontier.Contains(state))
             if (StateAlreadyVisited(state) || frontier.Contains(state))
             {
-                Console.WriteLine("DOES CONTAIN THE STATE: " + state.Location.X + " " + state.Location.Y);
+                // Console.WriteLine("DOES CONTAIN THE STATE: " + state.Location.X + " " + state.Location.Y);
                 return false;
             } else
             {
-                Console.WriteLine("DOESNT CONTAIN: " + state.Location.X + " " + state.Location.Y);
+                // Console.WriteLine("DOESNT CONTAIN: " + state.Location.X + " " + state.Location.Y);
                 frontier.Push(state);
                 return true;
             }

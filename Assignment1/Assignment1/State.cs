@@ -42,9 +42,6 @@ namespace Assignment1
         }
 
 
-        // TODO: CHECK IF THERE'S A MORE ELEGANT WAY TO DO THE ISGOALSTATE() METHOD BELOW
-        // ------------------------------------------------------------------------------
-
         /// <summary>
         /// Check if this state's location/coordinate matches any of the goal states, by iterating through
         /// every goal state in the given list
@@ -100,21 +97,32 @@ namespace Assignment1
         }
 
 
+        /// <summary>
+        /// Check if the coordinate to the given direction of the agent is not a wall or out of bounds
+        /// </summary>
+        /// <param name="direction">Direction to check</param>
+        /// <returns>True if agent can move there, otherwise false</returns>
         public Boolean AbleToMove(Direction direction)
         {
+            Coordinate coordinateToCheck = new Coordinate(_location.X, _location.Y);
+
             switch (direction)
             {
                 case Direction.Left:
-                    return _location.X > 0;
+                    coordinateToCheck.X--; // Move 1 left
+                    return (Environment.IsValidLocation(coordinateToCheck));
 
                 case Direction.Up:
-                    return _location.Y > 0;
+                    coordinateToCheck.Y--; // Move 1 up
+                    return (Environment.IsValidLocation(coordinateToCheck));
 
                 case Direction.Right:
-                    return _location.X < 11;
+                    coordinateToCheck.X++; // Move 1 right
+                    return (Environment.IsValidLocation(coordinateToCheck));
 
                 case Direction.Down:
-                    return _location.Y < 4;
+                    coordinateToCheck.Y++; // Move 1 down
+                    return (Environment.IsValidLocation(coordinateToCheck));
             }
 
             return false;

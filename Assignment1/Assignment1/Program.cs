@@ -1,6 +1,4 @@
-﻿#define DEBUGCOMMENTS // Use when wanting to print out comments to console for debugging
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +18,12 @@ namespace Assignment1
             string path = args[0];
 
             // Create a new environment object which will store all environment data
-            Environment environment = new Environment(path);
+            //Environment environment = new Environment(path);
+            Environment.CreateEnvironment(path);
 
-            Agent agent = new Agent(environment.AgentCoordinate, environment.GoalStates);
+            Agent agent = new Agent(Environment.AgentCoordinate, Environment.GoalStates);
+
+            Environment.DrawSelf();
 
             switch(args[1])
             {
@@ -54,29 +55,23 @@ namespace Assignment1
 
         static public void PrintPath(LinkedList<State> path)
         {
-            int count = 0;
-
-            // Reverse the linkedlist states, since it's in reverse order
+            // Reverse the linkedlist states, since it is in reverse order
             LinkedList<State> newList = new LinkedList<State>();
 
             while (path.Count != 0)
             {
+                // Reverse by Popping and pushing like how a stack works
                 LinkedListNode<State> node = path.First;
                 path.RemoveFirst();
                 newList.AddFirst(node);
             }
 
-            foreach(State pathNode in newList)
+            foreach (State pathNode in newList)
             {
-                count++;
-
                 Console.Write($"[{pathNode.Location.X}, {pathNode.Location.Y}] ");
-                if (count == 9)
-                {
-                    count = 0;
-                    Console.Write("\n");
-                }
             }
+
+            Console.WriteLine("\n");
         }
     }
 }

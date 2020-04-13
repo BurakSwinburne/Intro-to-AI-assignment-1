@@ -69,6 +69,27 @@ namespace Assignment1
             return Size == 0;
         }
 
+
+        /// <summary>
+        /// Check if the given state already exists as a stored state
+        /// </summary>
+        /// <param name="state">The state to check</param>
+        /// <returns>True if it exists, otherwise false</returns>
+        public Boolean Contains(State state)
+        {
+            foreach(State storedState in _states)
+            {
+                if (state.Equals(storedState))
+                {
+                    return true;
+                }
+            }
+            
+            return false;
+        }
+
+
+
         /**
          * 
          * Methods for using frontier as a stack. Used for depth-first search.

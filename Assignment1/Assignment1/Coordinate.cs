@@ -15,6 +15,11 @@ namespace Assignment1
         int _x, _y;
         int _width, _height; // Only used to specify walls
 
+        public int X { get => _x; set => _x = value; }
+        public int Y { get => _y; set => _y = value; }
+        public int Width { get => _width; set => _width = value; }
+        public int Height { get => _height; set => _height = value; }
+
         /// <summary>
         /// Store X and Y values which represent the coordinate position
         /// </summary>
@@ -54,10 +59,5 @@ namespace Assignment1
 
             return (otherX == _x) && (otherY == _y);
         }
-
-        public int X { get => _x; set => _x = value; }
-        public int Y { get => _y; set => _y = value; }
-        public int Width { get => _width; set => _width = value; }
-        public int Height { get => _height; set => _height = value; }
     }
 }

@@ -127,7 +127,9 @@ namespace Assignment1
         public static Boolean IsValidLocation(Coordinate location)
         {
             // First check if outside the boundaries of the environment
-            if (location.X < 0 || location.Y < 0 || location.X > _columns || location.Y > _rows)
+            // Note that columns - 1 and rows - 1 represents the last column and row, since
+            // columns and rows start at 0
+            if (location.X < 0 || location.Y < 0 || location.X > _columns - 1 || location.Y > _rows - 1)
             {
                 return false;
             }

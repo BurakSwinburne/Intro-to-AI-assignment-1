@@ -28,40 +28,59 @@ namespace Assignment1
         
         
         // Add a state to the back of the queue
-        private void Enqueue(State state)
+        public void Enqueue(State state)
         {
             _states.AddLast(state);
         }
 
         // Remove the first state in the queue
-        private void Dequeue()
+        public State Dequeue()
         {
-            if (_states.Count != 0)
-            {
-                _states.RemoveFirst();
-            }
+            State stateAtFront = GetFront(); // First store the state at the front of the queue, to return later
+            _states.RemoveFirst();
+            return stateAtFront;
         }
 
-        // Get the state at the top of the queue
-        public State GetTop()
+        // Get the state at the front of the queue
+        public State GetFront()
         {
             return _states.First();
         }
 
-        // Get the state at the top of the queye
+
+        /**
+         * 
+         * Methods for using the frontier as a stack - used for Depth-first search
+         * 
+         */
+        
+        /// <summary>
+        /// Push a state to the top of the stack
+        /// </summary>
+        /// <param name="state">The state to add</param>
+        public void Push(State state)
+        {
+            _states.AddLast(state);
+        }
+        
+        /// <summary>
+        /// Pop a state from the top of the stack
+        /// </summary>
+        /// <returns>The stack that was popped</returns>
         public State Pop()
         {
             State poppedState = GetTop();
-            
-            Dequeue();
-
+            _states.RemoveLast();
             return poppedState;
         }
 
-        public void Push(State state)
+
+        // Get the state at the top of the stack
+        public State GetTop()
         {
-            Enqueue(state);
+            return _states.Last();
         }
+
 
         public Boolean IsEmpty()
         {
@@ -86,14 +105,5 @@ namespace Assignment1
             
             return false;
         }
-
-
-
-        /**
-         * 
-         * Methods for using frontier as a stack. Used for depth-first search.
-         * 
-         */
-
     }
 }

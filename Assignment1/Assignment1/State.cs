@@ -193,7 +193,37 @@ namespace Assignment1
                 return path;
             }
         }
+
+
+        /*
+        public LinkedList<State> DepthFirstExplore(Frontier frontier, List<State> goalStates)
+        {
+            State currentState = frontier.Pop();
+
+            if (currentState.IsGoalState(goalStates))
+            {
+                // Return the path taken to reach the goal
+            }
+            else
+            {
+                Console.WriteLine($"[{_location.X}, {_location.Y}]");
+
+                List<State> childNodes = currentState.Explore();
+
+                for (int i = 0; i < childNodes.Count; i++)
+                {
+                    frontier.Push(childNodes[i]); // Add the current child node being explored to the frontier
+
+                    // Call the same method in the child node
+                    childNodes[i].DepthFirstExplore(frontier, goalStates);
+                }
+            }
+
+            return null;
+        }*/
+
     }
+
 
     public enum Direction
     {

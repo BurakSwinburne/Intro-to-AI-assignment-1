@@ -24,19 +24,19 @@ namespace Assignment1
             Agent agent = new Agent(Environment.AgentCoordinate, Environment.GoalStates);
 
             Environment.DrawSelf();
+            LinkedList<State> resultPath;
 
-            switch(args[1])
+            switch (args[1])
             {
                 case "BFS":
-                    LinkedList<State> resultPath = agent.BreadthFirstSearch();
-
+                    resultPath = agent.BreadthFirstSearch();
                     if (resultPath != null)
-                    {
                         PrintPath(resultPath);
-                    }
                     break;
                 case "DFS":
-
+                    resultPath = agent.DepthFirstSearch();
+                    if (resultPath != null)
+                        PrintPath(resultPath);
                     break;
                 case "GBFS":
 

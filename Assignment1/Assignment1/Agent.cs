@@ -41,8 +41,10 @@ namespace Assignment1
             
             while (!frontier.IsEmpty()) // As long as there are nodes to traverse
             {
-                State currentState = frontier.Pop(); // Return the popped state/node
+                State currentState = frontier.Dequeue(); // Return the popped state/node
                 _enteredStates.AddFirst(currentState); // Store it in memory as part of the path traversed
+
+                Console.WriteLine($"{currentState.Location.X}, {currentState.Location.Y}");
 
                 /**
                  * If the current node is one of the goal states, then return this node and the path
@@ -68,7 +70,7 @@ namespace Assignment1
                     // Expand the current node by exploring all possible child nodes/states
                     for (int i = 0; i < childNodes.Count; i++)
                     {
-                        if (AttachChildNode(childNodes[i]))
+                        if (AttachChildNode(childNodes[i], "BFS"))
                         {
                             // Do something here 
                         }
@@ -81,13 +83,52 @@ namespace Assignment1
             return null;
         }
 
+        public LinkedList<State> DepthFirstSearch()
+        {
+            frontier = new Frontier();
+            frontier.Push(_currentState); // Add initial state to frontier
+
+            
+            while (!frontier.IsEmpty())
+            {
+                State currentState = frontier.Pop();
+                _enteredStates.AddFirst(currentState);
+
+                Console.WriteLine($"{currentState.Location.X}, {currentState.Location.Y}");
+
+                if (currentState.IsGoalState(_goalStates))
+                {
+                    LinkedList<State> path = new LinkedList<State>();
+                    return currentState.GetPath(path);
+                } 
+                else 
+                {
+                    List<State> childNodes;
+
+                    childNodes = currentState.Explore();
+
+                    for (int i = 0; i < childNodes.Count; i++)
+                    {
+                        AttachChildNode(childNodes[i], "DFS");
+                    }
+                }
+
+            }
+
+            return null;
+        }
+
+
+
+
 
         /// <summary>
         /// Attach the child node to the parent
         /// </summary>
         /// <param name="state">The parent state/node</param>
+        /// <param name="strategy">The search strategy used (ie; DFS, BFS, etc)</param>
         /// <returns>True if child node was able to be attached. Otherwise false</returns>
-        public Boolean AttachChildNode(State state)
+        public Boolean AttachChildNode(State state, string strategy)
         {
             // First check if the state has been entered before
             //if (_enteredStates.Contains(state) || frontier.Contains(state))
@@ -96,7 +137,15 @@ namespace Assignment1
                 return false;
             } else
             {
-                frontier.Push(state);
+                if (strategy.Equals("BFS"))
+                {
+                    frontier.Enqueue(state);
+                }
+                else if (strategy.Equals("DFS"))
+                {
+                    frontier.Push(state);
+                }
+
                 return true;
             }
         }

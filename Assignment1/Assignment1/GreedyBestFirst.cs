@@ -43,31 +43,31 @@ namespace Assignment1
                         if (AddNodeToFrontier(childNodes[i]))
                         {
                             /**
-                             * Calculate heuristic value, by comparing the manhattan distance between the 
-                             * current state and the CLOSEST goal state
-                             */
-
-                            /**
-                             * Compare manhattan distances of between the current state and various goal
-                             * states, to see which is the closest (ignoring walls)
+                             * If there is more than 1 goal state, compare manhattan distances between the current state 
+                             * and various goal states, to see which is the closest (ignoring walls)
                              */
                             State examinedNode = childNodes[i];
-                            State closestGoalNode = agent.GoalStates[0]; // This is an arbitrary value, it will be overwritten
+                            State closestGoalNode = agent.GoalStates[0]; // Initially assume only 1 goal state
 
-                            // Find the closest goal node by comparing their manhattan distance values
-                            foreach(State currentNode in agent.GoalStates)
+                            if (agent.GoalStates.Count > 0)
                             {
-                                if (ManhattanDistance(examinedNode, currentNode) < ManhattanDistance(examinedNode, closestGoalNode))
-                                    closestGoalNode = currentNode;
+                                // Find the closest goal node by comparing their manhattan distance values
+                                foreach (State currentGoalNode in agent.GoalStates)
+                                {
+                                    if (ManhattanDistance(examinedNode, currentGoalNode) < ManhattanDistance(examinedNode, closestGoalNode))
+                                    {
+                                        closestGoalNode = currentGoalNode;
+                                    }
+                                }
                             }
 
                             /**
                              * Calculate heuristic value by using manhattan distance AND cost of moving
                              * a specific direction. Do this by assigning the values 0.0, 0.1, 0.2, 0.3 to
-                             * directions UP, LEFT, RIGHT and DOWN respectively.
+                             * directions UP, LEFT, DOWN and RIGHT respectively.
                              * 
                              * This means that in the case of the agent being able to move to multiple locations
-                             * which have the same heuristic values, it will try to move Up, then Left, then
+                             * which have the same manhattan values, it will try to move Up, then Left, then
                              * Down, then Right.
                              */
                             float moveCost = (float)examinedNode.Direction / 10; // UP = 0.0, LEFT = 0.1, DOWN = 0.2, RIGHT = 0.3

@@ -131,15 +131,6 @@ namespace Assignment1
                         _states.Remove(States.ElementAt(j));
                         _states.AddBefore(nodeToMoveRight, temp);
                     }
-                    /**
-                     * If both state's heuristic values are equal, it needs to be sorted by direction,
-                     * going in order of: UP, LEFT, DOWN, RIGHT. Therefore, an UP action will be performed
-                     * before trying to perform a LEFT action, etc.
-                     */
-                    else if (_states.ElementAt(j - 1).HeuristicValue == _states.ElementAt(j).HeuristicValue) 
-                    {
-
-                    }
 
                     j--;
                 }

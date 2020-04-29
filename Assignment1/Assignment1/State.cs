@@ -202,7 +202,10 @@ namespace Assignment1
         }
     }
 
-
+    /**
+     * The ordering of this enum must be: Up, Left, Down, Right, in order to ensure that when heuristic values
+     * are being calculated, the agent will prioritise moving up, then left, then down, then right
+     */
     public enum Direction
     {
         Up,

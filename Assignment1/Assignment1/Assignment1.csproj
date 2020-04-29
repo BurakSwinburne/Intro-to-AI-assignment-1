@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Agent.cs" />
+    <Compile Include="AStar.cs" />
     <Compile Include="BreadthFirst.cs" />
     <Compile Include="Coordinate.cs" />
     <Compile Include="DepthFirst.cs" />

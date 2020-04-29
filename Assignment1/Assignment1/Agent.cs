@@ -17,6 +17,7 @@ namespace Assignment1
         public List<State> GoalStates { get => _goalStates; set => _goalStates = value; }
         public State InitialState { get => _initialState; set => _initialState = value; }
 
+
         /// <summary>
         /// Initialise agent and pass through it's starting location
         /// </summary>
@@ -27,6 +28,7 @@ namespace Assignment1
             _initialState = new State(coordinate);
             _goalStates = goalStates;
         }
+
 
         /// <summary>
         /// Search for the path to a goal state using a given method
@@ -50,6 +52,7 @@ namespace Assignment1
                     return new GreedyBestFirst().Solve(this);
                 case "AS":
                     Console.WriteLine("Doing AS");
+                    return new AStar().Solve(this);
                     break;
                 case "CUS1":
                     Console.WriteLine("Doing CUS1");

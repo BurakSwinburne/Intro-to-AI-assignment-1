@@ -22,53 +22,31 @@ namespace Assignment1
             Environment.CreateEnvironment(path);
 
             Agent agent = new Agent(Environment.AgentCoordinate, Environment.GoalStates);
-
+            
             Environment.DrawSelf();
-            LinkedList<State> resultPath;
+            
+            LinkedList<State> resultPath = new LinkedList<State>();
+            resultPath = agent.Solve(args[1]);
 
-            switch (args[1])
+            if (resultPath != null)
             {
-                case "BFS":
-                    resultPath = agent.BreadthFirstSearch();
-                    if (resultPath != null)
-                        PrintPath(resultPath);
-                    break;
-                case "DFS":
-                    resultPath = agent.DepthFirstSearch();
-                    if (resultPath != null)
-                        PrintPath(resultPath);
-                    break;
-                case "GBFS":
-
-                    break;
-                case "AS":
-
-                    break;
-                case "CUS1":
-
-                    break;
-                case "CUS2":
-
-                    break;
+                PrintPath(resultPath);
+            } else
+            {
+                Console.WriteLine("No solution found");
             }
+
         }
 
         static public void PrintPath(LinkedList<State> path)
         {
-            // Reverse the linkedlist states, since it is in reverse order
-            LinkedList<State> newList = new LinkedList<State>();
-
-            while (path.Count != 0)
+            foreach (State pathNode in path)
             {
-                // Reverse by Popping and pushing like how a stack works
-                LinkedListNode<State> node = path.First;
-                path.RemoveFirst();
-                newList.AddFirst(node);
-            }
-
-            foreach (State pathNode in newList)
-            {
-                Console.Write($"[{pathNode.Location.X}, {pathNode.Location.Y}] ");
+                // Ignore parent node's direction
+                if (pathNode.ParentState == null)
+                    continue;
+                Console.Write($"{pathNode.Direction}; ");
+                //Console.WriteLine($"Move {pathNode.Direction} to {pathNode.Location.X}, {pathNode.Location.Y}; ");
             }
 
             Console.WriteLine("\n");

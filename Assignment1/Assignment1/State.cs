@@ -15,10 +15,14 @@ namespace Assignment1
         State _parentState; // Store the parent state
         Coordinate _location; // Store the location the agent is in in this state
         int _totalCost = 0; // Store the total number of nodes travelled to reach here. Initially 0 for root node
+        Direction _direction; // Store the direction taken to reach this state from the parent state
 
         public State ParentState { get => _parentState; set => _parentState = value; }
         public Coordinate Location { get => _location; set => _location = value; }
         public int TotalCost { get => _totalCost; set => _totalCost = value; }
+        public Direction Direction { get => _direction; set => _direction = value; }
+
+        public float HeuristicValue;
 
         /// <summary>
         /// Constructor used for the initial state/root node
@@ -29,16 +33,19 @@ namespace Assignment1
             _location = initialLocation;
         }
 
+
         /// <summary>
         /// Constructor used for all child nodes
         /// </summary>
         /// <param name="parent">The parent node</param>
         /// <param name="location">The location of the agent in this particular state</param>
-        public State(State parent, Coordinate location)
+        /// <param name="direction">The direction taken from parent node to reach this node</param>
+        public State(State parent, Coordinate location, Direction direction)
         {
             _parentState = parent;
             _location = location;
             _totalCost = parent.TotalCost + 1; // Just add 1 to the parent's cost to get the current cost
+            _direction = direction;
         }
 
 
@@ -153,7 +160,7 @@ namespace Assignment1
                     break;
             }
 
-            State newState = new State(this, newLoc);
+            State newState = new State(this, newLoc, direction);
             return newState;
         }
 
@@ -171,7 +178,7 @@ namespace Assignment1
 
 
         /// <summary>
-        /// Travel recursively through all the nodes in the path, then store them in a list
+        /// Travel recursively through all the nodes in the path, then store each node into the list
         /// </summary>
         /// <param name="path">The current path. Initially empty.</param>
         /// <returns>A linkedlist of states the agent has entered to reach the goal state</returns>
@@ -180,7 +187,7 @@ namespace Assignment1
             // If this is the root node
             if (_parentState == null)
             {
-                path.AddFirst(this); // Add this node to the path
+                path.AddLast(this); // Add this node to the path
                 return path;
             } else
             {
@@ -189,39 +196,10 @@ namespace Assignment1
                     path = _parentState.GetPath(path); // Call parent node before attaching self to the path
                 }
 
-                path.AddFirst(this); // Add self
+                path.AddLast(this); // Add self
                 return path;
             }
         }
-
-
-        /*
-        public LinkedList<State> DepthFirstExplore(Frontier frontier, List<State> goalStates)
-        {
-            State currentState = frontier.Pop();
-
-            if (currentState.IsGoalState(goalStates))
-            {
-                // Return the path taken to reach the goal
-            }
-            else
-            {
-                Console.WriteLine($"[{_location.X}, {_location.Y}]");
-
-                List<State> childNodes = currentState.Explore();
-
-                for (int i = 0; i < childNodes.Count; i++)
-                {
-                    frontier.Push(childNodes[i]); // Add the current child node being explored to the frontier
-
-                    // Call the same method in the child node
-                    childNodes[i].DepthFirstExplore(frontier, goalStates);
-                }
-            }
-
-            return null;
-        }*/
-
     }
 
 

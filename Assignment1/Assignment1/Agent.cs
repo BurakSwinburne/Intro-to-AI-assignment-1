@@ -9,10 +9,13 @@ namespace Assignment1
 {
     class Agent
     {
-        State _currentState;
+        State _initialState;
         List<State> _goalStates;
         LinkedList<State> _enteredStates = new LinkedList<State>(); // Save entered states to ensure they're not repeated
-        Frontier frontier;
+
+        public LinkedList<State> EnteredStates { get => _enteredStates; set => _enteredStates = value; }
+        public List<State> GoalStates { get => _goalStates; set => _goalStates = value; }
+        public State InitialState { get => _initialState; set => _initialState = value; }
 
         /// <summary>
         /// Initialise agent and pass through it's starting location
@@ -21,153 +24,42 @@ namespace Assignment1
         /// <param name="goalStates">List of coordinates that the agent needs to reach to achieve it's goal</param>
         public Agent(Coordinate coordinate, List<State> goalStates)
         {
-            _currentState = new State(coordinate);
+            _initialState = new State(coordinate);
             _goalStates = goalStates;
         }
 
-
         /// <summary>
-        /// Do a breadth-first search to create a path to any of the goal states. If a goal state
-        /// is reached, return it
+        /// Search for the path to a goal state using a given method
         /// </summary>
-        /// <returns>List of nodes/states it took to reach the goal state</returns>
-        public LinkedList<State> BreadthFirstSearch()
+        /// <param name="strategy">The strategy to use (i.e: DFS, BFS, GBFS, AS, CUS1, CUS2)</param>
+        /// <returns>The path if found. Otherwise null</returns>
+        public LinkedList<State> Solve(String strategy)
         {
-            Console.WriteLine("Doing breadth-first search");
-
-            // Create the frontier and add current state as the initial state/node of the queue
-            frontier = new Frontier();
-            frontier.Push(_currentState); // Push the initial state. This will be the root node of the tree
-            
-            while (!frontier.IsEmpty()) // As long as there are nodes to traverse
+            switch (strategy)
             {
-                State currentState = frontier.Dequeue(); // Return the popped state/node
-                _enteredStates.AddFirst(currentState); // Store it in memory as part of the path traversed
+                case "BFS":
+                    Console.WriteLine("Doing BFS");
+                    return new BreadthFirst().Solve(this);
 
-                Console.WriteLine($"{currentState.Location.X}, {currentState.Location.Y}");
+                case "DFS":
+                    Console.WriteLine("Doing DFS");
+                    return new DepthFirst().Solve(this);
 
-                /**
-                 * If the current node is one of the goal states, then return this node and the path
-                 * taken to reach here
-                 */
-                if (currentState.IsGoalState(_goalStates))
-                {
-                    // Call the node to retrieve it's path, which will call the recursive GetPath method 
-                    // until it reaches the root node
-                    LinkedList<State> path = new LinkedList<State>();
-                    return currentState.GetPath(path);
-                } 
-                /**
-                 * Explore all the child nodes and add them to the queue
-                 */
-                else
-                {
-                    // This will store all the child nodes of the node that is being explored
-                    List<State> childNodes;
-
-                    childNodes = currentState.Explore();
-
-                    // Expand the current node by exploring all possible child nodes/states
-                    for (int i = 0; i < childNodes.Count; i++)
-                    {
-                        if (AttachChildNode(childNodes[i], "BFS"))
-                        {
-                            // Do something here 
-                        }
-
-                    }
-                    
-                }
+                case "GBFS":
+                    Console.WriteLine("Doing GBFS");
+                    return new GreedyBestFirst().Solve(this);
+                case "AS":
+                    Console.WriteLine("Doing AS");
+                    break;
+                case "CUS1":
+                    Console.WriteLine("Doing CUS1");
+                    break;
+                case "CUS2":
+                    Console.WriteLine("Doing CUS2");
+                    break;
             }
 
             return null;
-        }
-
-        public LinkedList<State> DepthFirstSearch()
-        {
-            frontier = new Frontier();
-            frontier.Push(_currentState); // Add initial state to frontier
-
-            
-            while (!frontier.IsEmpty())
-            {
-                State currentState = frontier.Pop();
-                _enteredStates.AddFirst(currentState);
-
-                Console.WriteLine($"{currentState.Location.X}, {currentState.Location.Y}");
-
-                if (currentState.IsGoalState(_goalStates))
-                {
-                    LinkedList<State> path = new LinkedList<State>();
-                    return currentState.GetPath(path);
-                } 
-                else 
-                {
-                    List<State> childNodes;
-
-                    childNodes = currentState.Explore();
-
-                    for (int i = 0; i < childNodes.Count; i++)
-                    {
-                        AttachChildNode(childNodes[i], "DFS");
-                    }
-                }
-
-            }
-
-            return null;
-        }
-
-
-
-
-
-        /// <summary>
-        /// Attach the child node to the parent
-        /// </summary>
-        /// <param name="state">The parent state/node</param>
-        /// <param name="strategy">The search strategy used (ie; DFS, BFS, etc)</param>
-        /// <returns>True if child node was able to be attached. Otherwise false</returns>
-        public Boolean AttachChildNode(State state, string strategy)
-        {
-            // First check if the state has been entered before
-            //if (_enteredStates.Contains(state) || frontier.Contains(state))
-            if (StateAlreadyVisited(state) || frontier.Contains(state))
-            {
-                return false;
-            } else
-            {
-                if (strategy.Equals("BFS"))
-                {
-                    frontier.Enqueue(state);
-                }
-                else if (strategy.Equals("DFS"))
-                {
-                    frontier.Push(state);
-                }
-
-                return true;
-            }
-        }
-
-
-        /// <summary>
-        /// Check if an agent has already visited a state by comparing their location values
-        /// </summary>
-        /// <param name="otherState">The state that the agent will check has been visited already</param>
-        /// <returns>True if state visited, otherwise false</returns>
-        public Boolean StateAlreadyVisited(State otherState)
-        {
-            foreach(State state in _enteredStates)
-            {
-                if (state.Location.X == otherState.Location.X
-                    && state.Location.Y == otherState.Location.Y)
-                {
-                    return true;
-                }
-            }
-
-            return false;
         }
     }
 }

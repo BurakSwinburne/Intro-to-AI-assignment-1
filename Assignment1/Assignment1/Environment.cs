@@ -32,6 +32,12 @@ namespace Assignment1
              * Read the file. The method returns an array of strings, so convert
              * the array to a list just to make it easier to read the file
              */
+            
+            if (!System.IO.File.Exists(path))
+            {
+                Console.WriteLine($"Couldn't find file at {path}");
+            }
+
             string[] fileContent = System.IO.File.ReadAllLines(path);
             List<string> fileLines = fileContent.ToList();
 

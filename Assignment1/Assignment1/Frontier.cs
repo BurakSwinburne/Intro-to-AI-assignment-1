@@ -10,6 +10,8 @@ namespace Assignment1
     class Frontier
     {
         LinkedList<State> _states = new LinkedList<State>();
+        public LinkedList<State> States { get => _states; set => _states = value; }
+
 
         public int Size
         {
@@ -18,7 +20,6 @@ namespace Assignment1
 
         public Frontier()
         {
-
         }
 
         /*
@@ -104,6 +105,45 @@ namespace Assignment1
             }
             
             return false;
+        }
+
+        /// <summary>
+        /// Sort the states in the frontier by heuristic value
+        /// </summary>
+        public void Sort()
+        {
+            // Use a simple insertion sort to sort all the elements
+            for (int i = 0; i < _states.Count - 1; i++)
+            {
+                int j = i + 1;
+
+                while (j > 0)
+                {
+                    // The states with smallest heuristic values are placed at the front, since the 
+                    // smaller the value, the closer to the goal state it is
+                    if (_states.ElementAt(j - 1).HeuristicValue > _states.ElementAt(j).HeuristicValue)
+                    {
+                        // Ugly code below is due to the design of C#'s LinkedList class
+                        State temp = States.ElementAt(j);
+                        State temp2 = States.ElementAt(j - 1);
+                        LinkedListNode<State> nodeToMoveRight = _states.Find(temp2);
+
+                        _states.Remove(States.ElementAt(j));
+                        _states.AddBefore(nodeToMoveRight, temp);
+                    }
+                    /**
+                     * If both state's heuristic values are equal, it needs to be sorted by direction,
+                     * going in order of: UP, LEFT, DOWN, RIGHT. Therefore, an UP action will be performed
+                     * before trying to perform a LEFT action, etc.
+                     */
+                    else if (_states.ElementAt(j - 1).HeuristicValue == _states.ElementAt(j).HeuristicValue) 
+                    {
+
+                    }
+
+                    j--;
+                }
+            }
         }
     }
 }

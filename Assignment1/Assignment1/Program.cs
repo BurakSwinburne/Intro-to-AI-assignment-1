@@ -38,15 +38,7 @@ namespace Assignment1
             LinkedList<State> resultPath = new LinkedList<State>();
 
             resultPath = agent.Solve(method);
-
-            if (resultPath != null)
-            {
-                PrintOutput(agent.EnteredStates, resultPath, filepath, args[1]);
-            } else
-            {
-                Console.WriteLine("No solution found");
-            }
-
+            PrintOutput(agent.EnteredStates, resultPath, filepath, args[1]);
         }
 
 
@@ -59,20 +51,26 @@ namespace Assignment1
         /// <param name="strategy">Search method used</param>
         static public void PrintOutput(LinkedList<State> nodes, LinkedList<State> path, string filepath, string strategy)
         {
-            // Get the file name by splitting the filepath string using the char '\' and getting the last element, which
-            // is the file name
-            string filename = filepath.Split('\\')[filepath.Split('\\').Length - 1];
+            // Retrieve the file name by splitting the string using '\' as the seperator.
+            string[] splitFilePath = filepath.Split('\\');
+            string filename = splitFilePath[splitFilePath.Length - 1];
 
             Console.WriteLine($"{filename} {strategy} {nodes.Count}");
 
-            foreach (State pathNode in path)
+            if (path == null) {
+                Console.WriteLine("Solution not found");
+            } 
+            else
             {
-                // Ignore parent node's direction
-                if (pathNode.ParentState == null)
-                    continue;
-                Console.Write($"{pathNode.Direction}; ");
+                foreach (State pathNode in path)
+                {
+                    // Ignore parent node's direction
+                    if (pathNode.ParentState == null)
+                        continue;
+                    Console.Write($"{pathNode.Direction}; ");
+                }
             }
-
+            
             Console.WriteLine("\n");
         }
     }

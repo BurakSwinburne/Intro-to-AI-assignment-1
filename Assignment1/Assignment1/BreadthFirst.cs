@@ -19,14 +19,12 @@ namespace Assignment1
             this.agent = agent;
             frontier.Push(agent.InitialState);
 
-            Console.WriteLine("Doing breadth-first search");
-
             while (!frontier.IsEmpty()) // As long as there are nodes to traverse
             {
                 State currentState = frontier.Dequeue(); // Return the dequeued state/node
                 agent.EnteredStates.AddFirst(currentState); // Store it in memory as part of the path traversed
 
-                Console.WriteLine($"{currentState.Location.X}, {currentState.Location.Y}");
+                // Console.WriteLine($"{currentState.Location.X}, {currentState.Location.Y}");
 
                 /**
                  * If the current node is one of the goal states, then return this node and the path

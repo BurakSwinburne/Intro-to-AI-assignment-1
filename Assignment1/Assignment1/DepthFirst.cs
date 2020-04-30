@@ -20,8 +20,6 @@ namespace Assignment1
                 State currentState = frontier.Pop();
                 agent.EnteredStates.AddFirst(currentState);
 
-                Console.WriteLine($"{currentState.Location.X}, {currentState.Location.Y}");
-
                 if (currentState.IsGoalState(agent.GoalStates))
                 {
                     LinkedList<State> path = new LinkedList<State>();

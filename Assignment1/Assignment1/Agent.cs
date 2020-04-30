@@ -40,25 +40,20 @@ namespace Assignment1
             switch (strategy)
             {
                 case "BFS":
-                    Console.WriteLine("Doing BFS");
                     return new BreadthFirst().Solve(this);
 
                 case "DFS":
-                    Console.WriteLine("Doing DFS");
                     return new DepthFirst().Solve(this);
 
                 case "GBFS":
-                    Console.WriteLine("Doing GBFS");
                     return new GreedyBestFirst().Solve(this);
+
                 case "AS":
-                    Console.WriteLine("Doing AS");
                     return new AStar().Solve(this);
-                    break;
                 case "CUS1":
-                    Console.WriteLine("Doing CUS1");
                     break;
+
                 case "CUS2":
-                    Console.WriteLine("Doing CUS2");
                     break;
             }
 

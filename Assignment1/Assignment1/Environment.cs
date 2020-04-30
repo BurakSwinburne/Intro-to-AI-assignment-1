@@ -68,9 +68,9 @@ namespace Assignment1
             // Map dimensions in file is formatted as: [x,y]
             dimensions = Regex.Replace(dimensions, @"\[|\]", ""); // Remove square brackets
             string[] dimensionsSplit = dimensions.Split(',');
-            _columns = int.Parse(dimensionsSplit[0]);
-            _rows = int.Parse(dimensionsSplit[1]);
-
+            _rows = int.Parse(dimensionsSplit[0]);
+            _columns = int.Parse(dimensionsSplit[1]);
+            
             // Agent starting position is formatted as: (x,y)
             agentStartingPos = Regex.Replace(agentStartingPos, @"\(|\)", ""); // Remove parantheses
             string[] agentStartingPosSplit = agentStartingPos.Split(',');

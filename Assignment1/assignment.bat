@@ -1,1 +1,1 @@
-Assignment1\bin\Debug\Assignment1.exe %1 %2 %3
+Assignment1\bin\Release\Assignment1.exe %1 %2 %3

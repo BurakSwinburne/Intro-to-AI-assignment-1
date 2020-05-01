@@ -22,8 +22,6 @@ namespace Assignment1
                 State currentState = frontier.Dequeue(); // Get the node currently at the front of the queue
                 agent.EnteredStates.AddFirst(currentState);
 
-                // Console.WriteLine($"{currentState.Location.X}, {currentState.Location.Y}");
-
                 if (currentState.IsGoalState(agent.GoalStates))
                 {
                     LinkedList<State> path = new LinkedList<State>();

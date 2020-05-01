@@ -24,7 +24,6 @@ namespace Assignment1
                 State currentState = frontier.Dequeue(); // Return the dequeued state/node
                 agent.EnteredStates.AddFirst(currentState); // Store it in memory as part of the path traversed
 
-                // Console.WriteLine($"{currentState.Location.X}, {currentState.Location.Y}");
 
                 /**
                  * If the current node is one of the goal states, then return this node and the path

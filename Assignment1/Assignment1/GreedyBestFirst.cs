@@ -25,8 +25,6 @@ namespace Assignment1
                 State currentState = frontier.Dequeue(); // Get the node currently at the front of the queue
                 agent.EnteredStates.AddFirst(currentState);
 
-                // Console.WriteLine($"{currentState.Location.X}, {currentState.Location.Y}");
-
                 if (currentState.IsGoalState(agent.GoalStates))
                 {
                     LinkedList<State> path = new LinkedList<State>();
@@ -71,7 +69,6 @@ namespace Assignment1
                              */
                             float moveCost = (float)examinedNode.Direction / 10; // UP = 0.0, LEFT = 0.1, DOWN = 0.2, RIGHT = 0.3
                             examinedNode.HeuristicValue = (ManhattanDistance(examinedNode, closestGoalNode) + moveCost);
-                            // Console.WriteLine(examinedNode.Direction + " " + (int)examinedNode.Direction + "MOVE COST: " + moveCost);
                         }
                     }
                 }
